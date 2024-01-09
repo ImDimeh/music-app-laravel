@@ -19,9 +19,10 @@
 
 
     <template #content >
+      <input type="text" v-model="search" placeholder="Rechercher une musique ou un artiste" class="border-2  border-green-300 bg-white h-10 px-5 my-10 pr-16 rounded-lg  color-white-500 text-sm focus:outline-none">
       <ul>
         
-        <li v-for="track in tracks" :key="track.id" :class="[track.id %2 ? 'text-red-400' : 'text-green-400' ]">
+         <li v-for="track in filteredTracks" :key="track.uuid" :class="[track.id %2 ? 'text-red-400' : 'text-green-400' ] " > 
           {{ track.title }}
         </li>
       </ul>
@@ -38,14 +39,54 @@ import MusicLayout from '@/Layouts/MusicLayout.vue';
 import { Link }  from '@inertiajs/vue3' 
 
 export default {
-    components: {
-    MusicLayout,
-      Link 
-    },
-    props: {
-      tracks: Array
+  data() {
+    return {
+      search: '',
+      audio: null,
+      currentTrack: null,
     }
-  }
+  },
+  components: {
+    MusicLayout,
+    Link
+  },
+  props: {
+    tracks: Array
+  },
+  computed: {
+    filteredTracks() {
+      return this.tracks.filter(track => track.title.tolowerCase().includes(this.search.tolowerCase())) ||
+        this.tracks.filter(track => track.artist.tolowerCase().includes(this.search.tolowerCase()));
+
+
+    }
+  },
+  methods: {
+    play(track) {
+      const url = '/storage/' + track.music;
+
+      if (this.currentTrack) {
+        this.audio = new Audio(url);
+       this.audio.play();
+        
+      } else if(this.currentTrack !== track.uuid) {
+        this.audio.pause();
+        this.audio.src = url;
+        this.audio.play();
+        
+      } else if (this.audio.pause) {
+        this.audio.pause();
+      } else {
+        this.audio.play();
+      }
+      this.currentTrack = track.uuid;
+      this.audio.addevntListener('ended', () => {
+        this.currentTrack = null;
+      })
+
+    }
+  },
+}
 </script>
 <style scoped>
 *{
