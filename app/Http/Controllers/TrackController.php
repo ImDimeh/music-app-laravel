@@ -27,6 +27,7 @@ class TrackController extends Controller
     }
     public function store(Request $request)
     {
+        
     }
     public function edit(Track $track)
     {

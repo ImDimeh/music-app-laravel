@@ -26,6 +26,7 @@
                 <button>
                   <Link
                   :href="route('tracks.edit', {track : track } ) "
+                  v-if="$page.props.isAdmin"
                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
                   >edit
                 </Link>
@@ -34,6 +35,9 @@
                  <button>
                   <Link
                   :href="route('tracks.destroy', {track : track } ) "
+                  v-if="$page.props.isAdmin"
+                  method="delete"
+                  as="button"
                   class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
                   >delete
                 </Link>

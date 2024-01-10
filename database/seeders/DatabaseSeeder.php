@@ -16,11 +16,14 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'admin'=> true,
+        ]);
 
-        Track::factory(40)->create();
+        Track::factory(40)->create([
+            'music'=> 'tracks/musics/trk-067355e3-2bcb-4688-8f95-ffb97700bcf4.mp3'
+        ]);
     }
 }
