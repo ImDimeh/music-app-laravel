@@ -1,44 +1,54 @@
 <template>
   <MusicLayout>
     <template #title>
-      MUSIQUE
-
-    
-        
-      
+      Musiques
     </template>
 
     <template #action>
-      <Link :href="route('tracks.create')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        CREER UNE MUSIQUE
+      <Link
+        :href="route('tracks.create')"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Créer une musique
       </Link>
-
-      
-
     </template>
 
+    <template #content>
+      <div>
+        <input
+          id="search"
+          class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-5"
+          v-model="search"
+          type="search"
+          name="search"
+        >
 
-    <template #content >
-      <input type="text" v-model="search" placeholder="Rechercher une musique ou un artiste" class="border-2  border-green-300 bg-white h-10 px-5 my-10 pr-16 rounded-lg  color-white-500 text-sm focus:outline-none">
-      <ul>
-        
-         <li v-for="track in filteredTracks" :key="track.uuid" :class="[track.id %2 ? 'text-red-400' : 'text-green-400' ] " > 
-          {{ track.title }}
-        </li>
-      </ul>
+        <div class="grid grid-cols-4 gap-4">
+            <!-- component location-->
+        <Track  v-for="track in filteredTracks"
+                  :key="track.uuid"
+                  :track="track"
+                  />
 
+
+        </div>
+      </div>
     </template>
-
-    
-    
   </MusicLayout>
-
 </template>
+
 <script>
-import MusicLayout from '@/Layouts/MusicLayout.vue';
-import { Link }  from '@inertiajs/vue3' 
+import MusicLayout from '@/Layouts/MusicLayout.vue'
+import Track from '@/Components/TrackComponent/Track.vue'
 
 export default {
+  components: {
+    MusicLayout,
+    Track,
+  },
+  props: {
+    tracks: Array,
+  },
   data() {
     return {
       search: '',
@@ -46,44 +56,33 @@ export default {
       currentTrack: null,
     }
   },
-  components: {
-    MusicLayout,
-    Link
-  },
-  props: {
-    tracks: Array
-  },
   computed: {
     filteredTracks() {
-      return this.tracks.filter(track => track.title.tolowerCase().includes(this.search.tolowerCase())) ||
-        this.tracks.filter(track => track.artist.tolowerCase().includes(this.search.tolowerCase()));
-
-
+      return this.tracks.filter(track =>
+        track.title.toLowerCase().includes(this.search.toLowerCase())
+        || track.artist.toLowerCase().includes(this.search.toLowerCase())
+      );
     }
   },
   methods: {
     play(track) {
       const url = '/storage/' + track.music;
 
-      if (this.currentTrack) {
+      if(!this.currentTrack) {
         this.audio = new Audio(url);
-       this.audio.play();
-        
-      } else if(this.currentTrack !== track.uuid) {
+        this.audio.play();
+      } else if (this.currentTrack !== track.uuid) {
         this.audio.pause();
         this.audio.src = url;
         this.audio.play();
-        
-      } else if (this.audio.pause) {
+      } else if (!this.audio.paused) {
         this.audio.pause();
       } else {
         this.audio.play();
       }
-      this.currentTrack = track.uuid;
-      this.audio.addevntListener('ended', () => {
-        this.currentTrack = null;
-      })
 
+      this.currentTrack = track.uuid;
+      this.audio.addEventListener('ended', () => this.currentTrack = null);
     }
   },
 }

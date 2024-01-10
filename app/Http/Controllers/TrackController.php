@@ -30,25 +30,31 @@ class TrackController extends Controller
 
         
         $request->validate([
-            'title' => ['required' , 'string' , 'max:255' ,  'unique:tracks.title'],
+            'title' => ['required' , 'string' , 'max:255' ,  'unique:tracks,title'],
             'artist' => ['required' , 'string' , 'max:255'],
             'image' => ['required' , 'image' ],
             'music' => ['required' , 'file', 'extensions:mp3,wav' ],
             'display' => ['required' , 'boolean' ],
         ]);
 
-        $uuid = Str::uuid();
-        $extension = $request->image->extension();
-        $imagePath = $request->image->storeAs('/tracks/images' , $uuid . '.' . $extension);
+        $uuid = 'trk-'  . Str::uuid();
+        $imageExtension = $request->image->extension();
+        $imagePath = $request->image->storeAs('/tracks/images' , $uuid . '.' . $imageExtension);
+
+        $musicExtension = $request->music->extension();
+        $musicPath = $request->music->storeAs('/tracks/musics' , $uuid . '.' . $musicExtension);
+
+
         Track::create([
             'title' => $request->title,
-            'uuid' => 'trk-' . $uuid, // 'uuid' => '5d025a80-8515-11eb-9e1a-7f6e9e9d8c3d
+            'uuid' =>  $uuid, // 'uuid' => '5d025a80-8515-11eb-9e1a-7f6e9e9d8c3d
             'artist' => $request->artist,
             'image' => $imagePath,
-            'music' => $request->music->store('musics' , 'public'),
+            'music' => $musicPath,
             'display' => $request->display,
 
         ]);
+        return redirect()->route('tracks.index');
 
     }
 }
