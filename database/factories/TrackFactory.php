@@ -23,7 +23,7 @@ class TrackFactory extends Factory
         'title' =>$this->faker->sentence(4),
         'artist' => $this->faker->name(),
         'image' => 'tracks/images/trk-067355e3-2bcb-4688-8f95-ffb97700bcf4.jpg',
-        'music' =>'tracks/musics/trk-067355e3-2bcb-4688-8f95-ffb97700bcf4.mp3',
+        'music' =>'tracks/musics/trk-546a07b3-0e07-4fcf-901a-dab91e1e4d38.mp3',
         'display' => true,
         'play_Count'=> 0,
             //

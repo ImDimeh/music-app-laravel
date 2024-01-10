@@ -1,40 +1,39 @@
 <template>
-  <MusicLayout>
-    <template #title>
-      Musiques
-    </template>
+    <MusicLayout>
+        <template #title> Musiques </template>
 
-    <template #action>
-      <Link
-        :href="route('tracks.create')"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Créer une musique
-      </Link>
-    </template>
+        <template #action>
+            <Link
+                :href="route('tracks.create')"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+                Créer une musique
+            </Link>
+        </template>
 
-    <template #content>
-      <div>
-        <input
-          id="search"
-          class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-5"
-          v-model="search"
-          type="search"
-          name="search"
-        >
+        <template #content>
+            <div>
+                <input
+                    id="search"
+                    class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-5"
+                    v-model="search"
+                    type="search"
+                    name="search"
+                />
 
-        <div class="grid grid-cols-4 gap-4">
-            <!-- component location-->
-        <Track  v-for="track in filteredTracks"
-                  :key="track.uuid"
-                  :track="track"
-                  />
-
-
-        </div>
-      </div>
-    </template>
-  </MusicLayout>
+                <div class="grid grid-cols-4 gap-4">
+                    <!-- component location-->
+                    <Track
+                        v-for="track in filteredTracks"
+                        :key="track.uuid"
+                        :track="track"
+                        :active="currentTrack === track.uuid"
+                        @Played="play"
+                    />
+                </div>
+            </div>
+        </template>
+    </MusicLayout>
 </template>
 
 <script>
@@ -88,32 +87,23 @@ export default {
 }
 </script>
 <style scoped>
-*{
-  background-color: rgb(21, 132, 172);
-  
-  
-  }
+* {
+    background-color: rgb(21, 132, 172);
+}
 
-  ul{
+ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: rgb(21, 132, 172);
-
-  }
-  li{
+}
+li {
     float: left;
-    
+
     margin: 20px;
-
-  
-  }
-  li:hover{
+}
+li:hover {
     background-color: rgb(21, 132, 172);
-
-    
-
-
-  }
+}
 </style>
