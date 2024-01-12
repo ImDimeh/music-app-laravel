@@ -1,51 +1,21 @@
 <template>
   
-    <div
-                  
-                  class="max-w-sm rounded overflow-hidden shadow-lg cursor-pointer" 
-                  :class="{ 'border border-blue-500': active } "
-                  
-                >
-                <div class="w-full h-1/2">
-                  <img class="w-full h-full" :src="`/storage/${track.image}`">
-                </div>
-                <div class="px-6 py-4">
-                  <div class="font-bold text-xl mb-2">{{ track.title }}</div>
-                  <small class="text-gray-700 text-base">
-                    {{ track.artist }}
-                  </small>
-                </div>
-                <button
-                  @click="handleClick"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Play
-                </button>
-                
-
-                <button>
-                  <Link
-                  :href="route('tracks.edit', {track : track } ) "
-                  v-if="$page.props.isAdmin"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
-                  >edit
-                </Link>
-                </button>
-
-                 <button>
-                  <Link
-                  :href="route('tracks.destroy', {track : track } ) "
-                  v-if="$page.props.isAdmin"
-                  method="delete"
-                  as="button"
-                  class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-10 rounded"
-                  >delete
-                </Link>
-                </button>
-                
-                
+   <div class=" max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 overflow-hidden transform transition-transform hover:scale-105">
+    <div class="h-2/5 overflow-hidden">
+        <img class="w-full h-full object-cover" :src="`/storage/${track.image}`" alt="{{ track.title }}">
     </div>
+    <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">{{ track.title }}</div>
+        <p class="text-gray-700 text-base">{{ track.artist }}</p>
+    </div>
+    <div class="flex justify-between items-center px-6 py-2 ">
+        <button @click="handleClick" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Play</button>
 
+        <Link v-if="$page.props.isAdmin" :href="route('tracks.edit', {track: track})" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">Edit</Link>
+
+        <Link v-if="$page.props.isAdmin" :href="route('tracks.destroy', {track: track})" method="delete" as="button" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Delete</Link>
+    </div>
+</div>
   
 </template>
 

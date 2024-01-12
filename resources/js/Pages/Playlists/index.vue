@@ -4,7 +4,7 @@
 
         <template #action>
             <Link
-                :href="route('tracks.create')"
+                :href="route('playlists.create')"
                 
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
@@ -15,6 +15,35 @@
         <template #content>
 
           <h1>Playlist</h1>
+          
+          <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>TITRE</th>
+                    <th>NOMBRE DE MUSIC</th>
+                    <th>Créée le </th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="( playlist,i) in playlists" 
+                :key="playlist.uuid" 
+                >
+                    <td> {{ i + 1  }}</td>
+                    <td>{{ playlist.title }}</td>
+                    <td>{{ playlist.tracks_count }}</td>
+                    <td>
+                        <Link :href="route('playlists.show', {playlist: playlist})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Voir
+                        </Link>
+                    </td>
+                    
+
+                    
+                </tr>
+            </tbody>
+          </table>
             
         </template>
     </MusicLayout>
@@ -28,7 +57,10 @@ export default {
   components: {
     MusicLayout,
     
-  }
+    },
+  props: {
+    playlists: Array,
+  },
 }
 </script>
 <style scoped>

@@ -24,7 +24,7 @@ class Playlist extends Model
     }
     public function tracks():BelongsToMany
     {
-        return $this->belongsToMany(Track::class);
+        return $this->belongsToMany(Track::class)->withTimestamps();
     }
     
 }

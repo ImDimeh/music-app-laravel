@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Track;
+use App\Models\ApiKey;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,5 +27,7 @@ class DatabaseSeeder extends Seeder
         Track::factory(40)->create([
             'music'=> 'tracks/musics/trk-067355e3-2bcb-4688-8f95-ffb97700bcf4.mp3'
         ]);
+
+        
     }
 }
