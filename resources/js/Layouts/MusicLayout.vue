@@ -49,7 +49,8 @@
                                       class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
                                     Play-list
                                 </Link>
-                                 <Link href="#"
+                                 <Link :href="route('api-keys.index')"
+                                 
                                 :class="[route().current().includes(['tracks'])]"
                                       class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
                                     API KEY

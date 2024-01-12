@@ -15,7 +15,7 @@
         <template #content>
 
           <h1>API KEY createur </h1>
-          {{ ApiKey }}
+          
 
         <form 
         @submit.prevent="submit" >
@@ -54,7 +54,9 @@ export default {
   components: {
     MusicLayout,
     
-    },
+    },props: {
+        ApiKeys: Object,
+      },
     
   data() {
       return {
